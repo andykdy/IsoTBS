@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\andyk\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\andyk\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_IsoTBS.-1143790752.00" t="ExcludeRecursive" />
+    <e p="D:\Software\Development\IsoTBS" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="Capsule.cs" t="Include" />
+          <e p="Controller" t="Include">
+            <e p="Controller.cs" t="Include" />
+            <e p="ControllerState.cs" t="Include" />
+            <e p="ControllerStateMachine.cs" t="Include" />
+            <e p="Idle.cs" t="Include" />
+            <e p="Selected.cs" t="Include" />
+          </e>
+          <e p="Entities" t="Include">
+            <e p="UnitEntity.cs" t="Include" />
+          </e>
+          <e p="Pathfinding" t="Include">
+            <e p="AStar.cs" t="Include" />
+            <e p="AStarDebug.cs" t="Include" />
+            <e p="AStarTile.cs" t="Include" />
+          </e>
+          <e p="Singleton.cs" t="Include" />
+        </e>
+        <e p="Shaders" t="Include">
+          <e p="Outline.shader" t="Include" />
+        </e>
+      </e>
+      <e p="IsoTBS.sln" t="IncludeFlat" />
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>
