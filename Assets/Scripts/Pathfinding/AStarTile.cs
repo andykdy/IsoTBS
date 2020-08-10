@@ -18,4 +18,14 @@ public class AStarTile : Tile{
 	// private Building building;
 	private int sightCost;
 	private int travelCost;
+	
+	
+	public int gCost;
+	public int fCost;
+	public int hCost;
+	
+	public void CalculateFCost()
+	{
+		fCost = gCost + hCost;
+	}
 }
