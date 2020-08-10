@@ -152,8 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f26d590f0ca5d54ca32bd28507cf44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_selected_mat: {fileID: 0}
-  m_default_mat: {fileID: 0}
   map: {fileID: 1748735051}
   currUnit: {fileID: 0}
 --- !u!4 &234767513
@@ -651,8 +649,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MaxHealth: 0
   map: {fileID: 1748735051}
-  standard: {fileID: 0}
-  highlight: {fileID: 0}
+  standard: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  highlight: {fileID: 2100000, guid: 9d28ca30b5194584db46b9fe63cd999d, type: 2}
 --- !u!4 &946096127
 Transform:
   m_ObjectHideFlags: 0
