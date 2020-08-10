@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ControllerStateMachine : Singleton<ControllerStateMachine>
-{
+public abstract class ControllerStateMachine : Singleton<ControllerStateMachine>{
     protected ControllerState m_State;
 
     public void SetState(ControllerState state)

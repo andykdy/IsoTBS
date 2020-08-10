@@ -9,7 +9,7 @@ public class Idle : ControllerState
 
     public override void Start()
     {
-
+        Debug.Log("idle start");
     }
 
     public override void Update()
@@ -23,7 +23,7 @@ public class Idle : ControllerState
 
     public override void OnMouseClick()
     {
-        m_Controller.SelectUnit();
+        m_Controller.Select();
         if (m_Controller.currUnit != null){
             m_Controller.SetState(new Selected(m_Controller));
         }

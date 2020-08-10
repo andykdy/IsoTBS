@@ -4,11 +4,9 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Controller : ControllerStateMachine {
-    [SerializeField] private Material m_selected_mat;
-    [SerializeField] private Material m_default_mat;
     [SerializeField] private Tilemap map;
     private Camera cam;
-    public UnitEntity currUnit;
+    [HideInInspector] public UnitEntity currUnit;
     
     // Start is called before the first frame update
     void Start()
@@ -27,17 +25,25 @@ public class Controller : ControllerStateMachine {
         }
         m_State.Update();
     }
-    public void SelectUnit(){
-        Vector2 mousePos = Input.mousePosition;
-        mousePos = cam.ScreenToWorldPoint(mousePos);
-        Vector3Int gridPos = map.WorldToCell(mousePos);
-        AStarTile tile = map.GetTile<AStarTile>(gridPos);
-        if (tile != null){
-    //            if (currUnit != null)
-    //                currUnit.GetComponent<SpriteRenderer>().material = default_mat;
-            currUnit = tile.unit;
-            currUnit.dest = new Vector3(mousePos.x, mousePos.y, 2);
-            //currUnit.GetComponent<SpriteRenderer>().material = selected_mat;
+    public void Select(){
+        Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        if(hit.collider != null)
+        {
+            if(hit.transform.CompareTag("Unit")){
+                currUnit = hit.transform.gameObject.GetComponent<UnitEntity>();
+                currUnit.SetSelectHighlight(true);
+            }
+            else{
+                currUnit = null;
+            }
         }
+    }
+
+    public void MoveUnit()
+    {
+        Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        currUnit.dest = mousePos;
+        currUnit.SetSelectHighlight(false);
     }
 }
