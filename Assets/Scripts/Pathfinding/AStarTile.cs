@@ -19,6 +19,10 @@ public class AStarTile : Tile{
 	private int sightCost;
 	private int travelCost;
 	
+	public AStarTile cameFromNode;
+
+	public int x;
+	public int y;
 	
 	public int gCost;
 	public int fCost;
@@ -27,5 +31,12 @@ public class AStarTile : Tile{
 	public void CalculateFCost()
 	{
 		fCost = gCost + hCost;
+	}
+
+	public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
+	{
+		x = position.x;
+		y = position.y;
+		return base.StartUp(position, tilemap, go);
 	}
 }
