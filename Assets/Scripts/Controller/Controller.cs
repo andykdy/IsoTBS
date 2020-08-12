@@ -39,10 +39,10 @@ public class Controller : ControllerStateMachine {
             
         }
         for(int i = 0 ; i < path.Count - 1 ; i++){
-            Vector3 a = grid.CellToWorld(new Vector3Int(path[i].nodePos.x, path[i].nodePos.y, -2));
-            Vector3 b = grid.CellToWorld(new Vector3Int(path[i + 1].nodePos.x, path[i + 1].nodePos.y, -2));
-            a.y += 0.75f;
-            b.y += 0.75f;
+            Vector3 a = grid.CellToWorld(new Vector3Int(path[i].nodePos.x, path[i].nodePos.y, 0));
+            Vector3 b = grid.CellToWorld(new Vector3Int(path[i + 1].nodePos.x, path[i + 1].nodePos.y, 0));
+            a.y += 0.325f;
+            b.y += 0.325f;
             Debug.DrawLine(a, b,Color.red);
         }
         m_State.Update();
