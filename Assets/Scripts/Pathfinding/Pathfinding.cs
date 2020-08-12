@@ -6,30 +6,19 @@ public class Pathfinding: Singleton<Pathfinding>
 {
     [SerializeField]
     private Tilemap map;
-    private List<AStarTile> openList;
-    private List<AStarTile> closedList;
+    private List<Node> openList;
+    private List<Node> closedList;
 
-    public List<AStarTile> FindPath(AStarTile startNode, AStarTile endNode)
+    public List<Node> FindPath(Node startNode, Node endNode)
     {
-        openList = new List<AStarTile> {startNode};
-        closedList = new List<AStarTile>();
-        BoundsInt dims = map.cellBounds;
-        
-        for (int i = dims.xMin; i < dims.xMax; i++){
-            for (int j = dims.yMin; j < dims.yMax; j++){
-                AStarTile temp = map.GetTile<AStarTile>(new Vector3Int(i,j,0));
-                temp.gCost = int.MaxValue;
-                temp.CalculateFCost();
-                temp.cameFromNode = null;
-            }
-        }
-
+        openList = new List<Node> {startNode};
+        closedList = new List<Node>();
         startNode.gCost = 0;
         startNode.hCost = CalculateDistCost(startNode, endNode);
         startNode.CalculateFCost();
 
         while (openList.Count > 0){
-            AStarTile currentNode = GetLowestFCostNode(openList);
+            Node currentNode = GetLowestFCostNode(openList);
             if (currentNode == endNode){
                 return CalculatePath(endNode);
             }
@@ -37,7 +26,7 @@ public class Pathfinding: Singleton<Pathfinding>
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
-            foreach (AStarTile neighbour in GetNeighbourList(map, currentNode)){
+            foreach (Node neighbour in GetNeighbourList(currentNode)){
                 if (closedList.Contains(neighbour)) continue;
                 int tentativeGCost = currentNode.gCost + CalculateDistCost(currentNode, neighbour);
                 if (tentativeGCost < neighbour.gCost){
@@ -54,27 +43,25 @@ public class Pathfinding: Singleton<Pathfinding>
         return null;
     }
 
-    private List<AStarTile> GetNeighbourList(Tilemap tm, AStarTile currentNode)
-    {
-        BoundsInt dims = tm.cellBounds;
-        
-        List<AStarTile> neighbourList = new List<AStarTile>();
-        if (currentNode.x - 1 >= 0)
-            neighbourList.Add(tm.GetTile<AStarTile>(new Vector3Int(currentNode.x - 1, currentNode.y,0)));
-        if (currentNode.x + 1 < dims.xMax)
-            neighbourList.Add(tm.GetTile<AStarTile>(new Vector3Int(currentNode.x + 1, currentNode.y,0)));
-        if (currentNode.y - 1 >= 0)
-            neighbourList.Add(tm.GetTile<AStarTile>(new Vector3Int(currentNode.x, currentNode.y - 1,0)));
-        if (currentNode.y + 1 < dims.yMax)
-            neighbourList.Add(tm.GetTile<AStarTile>(new Vector3Int(currentNode.x, currentNode.y + 1,0)));
+    private List<Node> GetNeighbourList(Node currentNode)
+    {   
+        List<Node> neighbourList = new List<Node>();
+        if (map.HasTile(currentNode.nodePos + Vector3Int.left))
+            neighbourList.Add(map.GetInstantiatedObject(currentNode.nodePos + Vector3Int.left).GetComponent<Node>());
+        if (map.HasTile(currentNode.nodePos + Vector3Int.right))
+            neighbourList.Add(map.GetInstantiatedObject(currentNode.nodePos + Vector3Int.right).GetComponent<Node>());
+        if (map.HasTile(currentNode.nodePos + Vector3Int.down))
+            neighbourList.Add(map.GetInstantiatedObject(currentNode.nodePos + Vector3Int.down).GetComponent<Node>());
+        if (map.HasTile(currentNode.nodePos + Vector3Int.up))
+            neighbourList.Add(map.GetInstantiatedObject(currentNode.nodePos + Vector3Int.up).GetComponent<Node>());
         return neighbourList;
     }
 
-    private List<AStarTile> CalculatePath(AStarTile endNode)
+    private List<Node> CalculatePath(Node endNode)
     {
-        List<AStarTile> path = new List<AStarTile>();
+        List<Node> path = new List<Node>();
         path.Add(endNode);
-        AStarTile curr = endNode;
+        Node curr = endNode;
         while (curr.cameFromNode != null){
             path.Add(curr.cameFromNode);
             curr = curr.cameFromNode;
@@ -83,17 +70,17 @@ public class Pathfinding: Singleton<Pathfinding>
         return path;
     }
 
-    private int CalculateDistCost(AStarTile a, AStarTile b)
+    private int CalculateDistCost(Node a, Node b)
     {
-        int x = Mathf.Abs(a.x - b.x);
-        int y = Mathf.Abs(a.y - b.y);
+        int x = Mathf.Abs(a.nodePos.x - b.nodePos.x);
+        int y = Mathf.Abs(a.nodePos.y - b.nodePos.y);
         int remaining = Mathf.Abs(x - y);
         return Mathf.Min(x, y) + remaining;
     }
 
-    private AStarTile GetLowestFCostNode(List<AStarTile> pathNodeList)
+    private Node GetLowestFCostNode(List<Node> pathNodeList)
     {
-        AStarTile lowest = pathNodeList[0];
+        Node lowest = pathNodeList[0];
         for (int i = 1; i < pathNodeList.Count; i++){
             if (pathNodeList[i].fCost < lowest.fCost)
                 lowest = pathNodeList[i];
