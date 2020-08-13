@@ -9,7 +9,6 @@ public class Idle : ControllerState
 
     public override void Start()
     {
-        Debug.Log("idle start");
     }
 
     public override void Update()

@@ -10,7 +10,6 @@ public class Selected : ControllerState
 
     public override void Start()
     {
-        Debug.Log("selected start");
     }
 
     public override void Update()
@@ -20,7 +19,12 @@ public class Selected : ControllerState
     
     public override void OnMouseClick()
     {
-        m_Controller.MoveUnit();
-        m_Controller.SetState(new Idle(m_Controller));
+        if (m_Controller.Select() == "unit"){
+            m_Controller.SetState(new Selected(m_Controller));
+        }
+        else{
+            m_Controller.MoveUnit();
+            m_Controller.SetState(new Idle(m_Controller));
+        }
     }
 }
