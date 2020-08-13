@@ -18,8 +18,11 @@ public class Node : MonoBehaviour
     }
     public void Initialize(Vector3Int pos, int cost)
     {
-        hCost = cost;
         nodePos = pos;
+        Initialize(cost);
+    }
+    public void Initialize( int cost)
+    {
         gCost = int.MaxValue;
         CalculateFCost();
         cameFromNode = null;

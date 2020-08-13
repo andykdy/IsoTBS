@@ -9,13 +9,8 @@ public class Controller : ControllerStateMachine {
     private Camera cam;
     [HideInInspector] public UnitEntity currUnit;
 
-    private Vector3Int start;
-    private Vector3Int end;
+    
 
-    private Node startNode;
-    private Node endNode;
-
-    private List<Node> path;
     
     // Start is called before the first frame update
     void Start()
@@ -23,7 +18,6 @@ public class Controller : ControllerStateMachine {
         SetState(new Idle(this));
         m_State.Start();
         cam = Camera.main;
-        path = new List<Node>();
     }
 
 
@@ -32,18 +26,6 @@ public class Controller : ControllerStateMachine {
         if (m_State == null) return;
         if (Input.GetMouseButtonDown(0)){
             m_State.OnMouseClick();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space)){
-            path = Pathfinding.Instance.FindPath(startNode, endNode);
-            
-        }
-        for(int i = 0 ; i < path.Count - 1 ; i++){
-            Vector3 a = grid.CellToWorld(new Vector3Int(path[i].nodePos.x, path[i].nodePos.y, 0));
-            Vector3 b = grid.CellToWorld(new Vector3Int(path[i + 1].nodePos.x, path[i + 1].nodePos.y, 0));
-            a.y += 0.325f;
-            b.y += 0.325f;
-            Debug.DrawLine(a, b,Color.red);
         }
         m_State.Update();
     }
@@ -59,24 +41,16 @@ public class Controller : ControllerStateMachine {
                     currUnit.SetSelectHighlight(false);
                 currUnit = hit.transform.gameObject.GetComponent<UnitEntity>();
                 currUnit.SetSelectHighlight(true);
+                Debug.Log("Unit Selected");
                 return "unit";
             }
             if (hit.transform.CompareTag("Map")){
-
-                if (start == Vector3Int.zero){
-                    start = grid.WorldToCell(mousePos);
-                    startNode = map.GetInstantiatedObject(start).GetComponent<Node>();
-                    Debug.Log("Start set at... " + start.x + " , " + start.y + " , " + start.z);
-                } else if (end == Vector3Int.zero){
-                    end = grid.WorldToCell(mousePos);
-                    endNode = map.GetInstantiatedObject(end).GetComponent<Node>();
-                    Debug.Log("End set at... " + end.x + " , " + end.y + " , " + end.z);
-                }
-
+                Debug.Log("Map Selected");
                 return "map";
             }
             else{
                 currUnit = null;
+                Debug.Log("You hit nothing");
                 currUnit.SetSelectHighlight(true);
                 return "";
             }
@@ -87,8 +61,24 @@ public class Controller : ControllerStateMachine {
 
     public void MoveUnit()
     {
+        Vector3Int start;
+        Vector3Int end;
+    
+        Node startNode;
+        Node endNode;
         Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        currUnit.dest = mousePos;
+        start = grid.WorldToCell(currUnit.transform.position);
+        startNode = map.GetInstantiatedObject(start).GetComponent<Node>();
+        end = grid.WorldToCell(mousePos);
+        if (map.HasTile(end)){
+            Debug.Log("Searching for path");
+            endNode = map.GetInstantiatedObject(end).GetComponent<Node>();
+            currUnit.SetPath(Pathfinding.Instance.FindPath(startNode, endNode));
+        }
+        else{
+            Debug.Log("End tile is not within bounds");
+        }
+
         currUnit.SetSelectHighlight(false);
         currUnit = null;
     }

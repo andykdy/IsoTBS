@@ -11,6 +11,9 @@ public class Pathfinding: Singleton<Pathfinding>
 
     public List<Node> FindPath(Node startNode, Node endNode)
     {
+        foreach (Node n in FindObjectsOfType<Node>()){
+            n.Initialize(0);
+        }
         openList = new List<Node> {startNode};
         closedList = new List<Node>();
         startNode.gCost = 0;
