@@ -32,8 +32,10 @@ public class Controller : ControllerStateMachine {
     
     //#TODO return an enum or sth that lets us know if we clicked a unit or map
     public string Select(){
-        Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = Camera.main.transform.position.z;
+        Ray ray = new Ray(mousePos, new Vector3(0, 0, 1));
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
         if(hit.collider != null)
         {
             if(hit.transform.CompareTag("Unit")){
@@ -67,7 +69,9 @@ public class Controller : ControllerStateMachine {
         Node startNode;
         Node endNode;
         Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        start = grid.WorldToCell(currUnit.transform.position);
+        Vector3 offsetUnit = currUnit.transform.position;
+        offsetUnit.y -= 0.25f;
+        start = grid.WorldToCell(offsetUnit);
         startNode = map.GetInstantiatedObject(start).GetComponent<Node>();
         end = grid.WorldToCell(mousePos);
         if (map.HasTile(end)){

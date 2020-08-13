@@ -53,8 +53,7 @@ public abstract class UnitEntity : UnitStateMachine
     {
         path = givenPath;
         if (path != null){
-            path.RemoveAt(0);
-            dest = map.layoutGrid.CellToWorld(path[0].nodePos);
+            dest = path[0].transform.position;
             m_State.StartMove();
         }
         else{
@@ -71,7 +70,7 @@ public abstract class UnitEntity : UnitStateMachine
             }
             else{
                 path.RemoveAt(0);
-                dest = map.layoutGrid.CellToWorld(path[0].nodePos);
+                dest = path[0].transform.position;
                 path[0].cameFromNode = null;
             }
         }
