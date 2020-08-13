@@ -4,7 +4,7 @@
 ### What? 
 A 2D Isometric turn based strategy game with influences from Age of Empire : Age of Kings DS edition and Fire Emblem
 
-![Age of Empire: Age of Kings DS](https://i.ytimg.com/vi/98VfK_g4Ac0/maxresdefault.jpg =250x)
+![Age of Empire: Age of Kings DS](https://i.ytimg.com/vi/98VfK_g4Ac0/maxresdefault.jpg)
 
 ### How? 
 Using Unity Engine and a lot of tutorials.
@@ -13,10 +13,10 @@ Using Unity Engine and a lot of tutorials.
 - ~~Unit structuring~~
 - ~~Controller and Game Manager structuring~~
 - ~~Unit Selection~~
-- Unit movement
-  = ~~A* pathfinding algorithm~~
-  = Render potential moves
-  = Render selected path
+- Unit movement  
+  = ~~A* pathfinding algorithm~~  
+  = Render potential moves  
+  = Render selected path  
 - Unit combat
 - Unit production
 - Building structuring
