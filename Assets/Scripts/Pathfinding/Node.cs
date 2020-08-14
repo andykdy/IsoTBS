@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 public class Node : MonoBehaviour
 {
@@ -16,12 +17,19 @@ public class Node : MonoBehaviour
     {
         fCost = gCost + hCost;
     }
+    
+    // TODO: Fix this Russian Doll initialization 
     public void Initialize(Vector3Int pos, int cost)
     {
         nodePos = pos;
         Initialize(cost);
     }
     public void Initialize( int cost)
+    {
+        travelCost = cost;
+        Initialize();
+    }
+    public void Initialize()
     {
         gCost = int.MaxValue;
         CalculateFCost();

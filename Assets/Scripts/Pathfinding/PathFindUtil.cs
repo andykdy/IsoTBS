@@ -8,9 +8,9 @@ public static class PathFindUtil
     {
         switch (type){
             case "Mountain":
-                return 3;
+                return 5;
             case "Water":
-                return int.MaxValue;
+                return 1000;
             case "Dirt":
                 return 1;
             case "Beach":
@@ -18,7 +18,8 @@ public static class PathFindUtil
             case "Grass":
                 return 2;
             default:
-                return 0;
+                Debug.LogError("Tile type not recognized. Tile cost set to -1");
+                return -1;
         }
     }
 }

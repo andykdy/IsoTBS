@@ -12,11 +12,11 @@ public class Pathfinding: Singleton<Pathfinding>
     public List<Node> FindPath(Node startNode, Node endNode)
     {
         foreach (Node n in FindObjectsOfType<Node>()){
-            n.Initialize(0);
+            n.Initialize();
         }
         openList = new List<Node> {startNode};
         closedList = new List<Node>();
-        startNode.gCost = 0;
+        startNode.gCost = startNode.travelCost;
         startNode.hCost = CalculateDistCost(startNode, endNode);
         startNode.CalculateFCost();
 
@@ -31,7 +31,7 @@ public class Pathfinding: Singleton<Pathfinding>
 
             foreach (Node neighbour in GetNeighbourList(currentNode)){
                 if (closedList.Contains(neighbour)) continue;
-                int tentativeGCost = currentNode.gCost + CalculateDistCost(currentNode, neighbour);
+                int tentativeGCost = currentNode.gCost + CalculateDistCost(currentNode, neighbour) + currentNode.travelCost;
                 if (tentativeGCost < neighbour.gCost){
                     neighbour.cameFromNode = currentNode;
                     neighbour.gCost = tentativeGCost;
