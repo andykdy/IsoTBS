@@ -9,6 +9,5 @@
 
     public virtual void Start() {}
     public virtual void Update() {}
-    public virtual void StartMove(){}
-    public virtual void StopMove(){}
+    
 }

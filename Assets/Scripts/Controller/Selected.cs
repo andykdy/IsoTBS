@@ -14,7 +14,7 @@ public class Selected : ControllerState
 
     public override void Update()
     {
-        
+        m_Controller.RenderLookUp();
     }
     
     public override void OnMouseClick()

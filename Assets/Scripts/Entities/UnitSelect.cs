@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitIdle : UnitState
+public class UnitSelect : UnitState
 {
-    public UnitIdle(UnitEntity unit) : base(unit) {}
-
+    public UnitSelect(UnitEntity unit) : base(unit) {}
 
     public override void Start()
     {
-        m_Unit.SetSelectHighlight(false);
+        m_Unit.SetSelectHighlight(true);
     }
 
     public override void Update()

@@ -152,8 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f26d590f0ca5d54ca32bd28507cf44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lookup: {fileID: 1486077180}
   map: {fileID: 1748735051}
   grid: {fileID: 594708816}
+  luTile: {fileID: 11400000, guid: 7fde3f0f302cb994aacd004447023042, type: 2}
   currUnit: {fileID: 0}
 --- !u!4 &234767513
 Transform:
@@ -456,8 +458,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1748735049}
   - {fileID: 1486077182}
+  - {fileID: 1748735049}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -480,8 +482,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!70 &946096125
-CapsuleCollider2D:
+--- !u!60 &946096125
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -494,8 +496,53 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.4, y: 0.63666666}
-  m_Direction: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.4, y: 0.63666666}
+    newSize: {x: 0.4, y: 0.63666666}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.12666667, y: -0.31166667}
+      - {x: 0.12666667, y: -0.30166668}
+      - {x: 0.13666667, y: -0.255}
+      - {x: 0.17666668, y: -0.22166668}
+      - {x: 0.2, y: -0.18166667}
+      - {x: 0.2, y: -0.028333334}
+      - {x: 0.18666667, y: 0.018333334}
+      - {x: 0.16666667, y: 0.058333334}
+      - {x: 0.14333333, y: 0.09166667}
+      - {x: 0.10666667, y: 0.125}
+      - {x: 0.14666668, y: 0.24833333}
+      - {x: 0.123333335, y: 0.29833335}
+      - {x: 0.1, y: 0.31833333}
+      - {x: 0.06666667, y: 0.31833333}
+      - {x: 0.054513145, y: 0.31703514}
+      - {x: 0.04858342, y: 0.31753525}
+      - {x: 0.032771956, y: 0.31393465}
+      - {x: 0.0046313033, y: 0.31644112}
+      - {x: -0.033333335, y: 0.31744748}
+      - {x: -0.043333333, y: 0.31704867}
+      - {x: -0.060000002, y: 0.31833333}
+      - {x: -0.11, y: 0.31833333}
+      - {x: -0.123333335, y: 0.30166668}
+      - {x: -0.14, y: 0.23166667}
+      - {x: -0.13666667, y: 0.20833334}
+      - {x: -0.11, y: 0.13833334}
+      - {x: -0.19333334, y: 0.018333334}
+      - {x: -0.2, y: -0.008333334}
+      - {x: -0.2, y: -0.18833333}
+      - {x: -0.15333334, y: -0.24833333}
+      - {x: -0.12666667, y: -0.31166667}
+      - {x: -0.120000005, y: -0.31833333}
+      - {x: -0.023333333, y: -0.31833333}
+      - {x: -0.0059025753, y: -0.31884265}
+      - {x: 0.01, y: -0.31833333}
+      - {x: 0.120000005, y: -0.31833333}
 --- !u!114 &946096126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ae13e3ed2746f45b94746c654156f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TravelCost: 0
   m_MaxHealth: 0
   map: {fileID: 1748735051}
   standard: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
@@ -565,7 +613,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1630754791
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f2ffbdb8ac77a0c4ba7d179b9f991e49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -634,7 +682,7 @@ GameObject:
   - component: {fileID: 1486077180}
   - component: {fileID: 1486077181}
   m_Layer: 0
-  m_Name: DebugTilemap
+  m_Name: Lookup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -660,31 +708,31 @@ Tilemap:
   - m_RefCount: 0
     m_Data:
       e00: 0
-      e01: 0.00000005679931
-      e02: -3.094e-41
-      e03: -5.0359535
+      e01: 4.4020536e+36
+      e02: -1.5886645e+29
+      e03: 0.0000000012417845
       e10: NaN
-      e11: 4.5904e-41
-      e12: 6.85e-43
-      e13: 6.82e-43
+      e11: 4.5905e-41
+      e12: 8.65e-43
+      e13: 8.63e-43
       e20: 1.04e-43
-      e21: -3.1176e-41
-      e22: -3.878381e-14
-      e23: -3.878381e-14
-      e30: 0
-      e31: 6.85e-43
-      e32: 1.51e-43
-      e33: 1.51e-43
+      e21: -1.5886963e+29
+      e22: -0.037515283
+      e23: -0.037515283
+      e30: 8.66e-43
+      e31: 8.65e-43
+      e32: 2.47e-43
+      e33: 2.47e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: -3.094e-41, g: -3.094e-41, b: -3.094e-41, a: -3.094e-41}
+    m_Data: {r: -1.5886645e+29, g: -1.5886645e+29, b: -1.5886645e+29, a: -1.5886645e+29}
   m_TileObjectToInstantiateArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -10, y: -8, z: 0}
-  m_Size: {x: 10, y: 8, z: 1}
+  m_Origin: {x: -10, y: -12, z: 0}
+  m_Size: {x: 15, y: 14, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -741,15 +789,15 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2114759317
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
-  m_Mode: 0
+  m_Mode: 1
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!4 &1486077182
@@ -764,7 +812,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 594708817}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1748735048
 GameObject:
@@ -797,7 +845,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 594708817}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1748735050
 TilemapRenderer:
@@ -2214,6 +2262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ae13e3ed2746f45b94746c654156f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TravelCost: 0
   m_MaxHealth: 0
   map: {fileID: 1748735051}
   standard: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
@@ -2257,7 +2306,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1630754791
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f2ffbdb8ac77a0c4ba7d179b9f991e49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

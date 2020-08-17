@@ -43,6 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Lookup
+    uniqueID: 2114759317
+    locked: 0
   - name: Units
     uniqueID: 2664212505
     locked: 0

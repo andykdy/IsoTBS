@@ -9,6 +9,7 @@ public abstract class UnitEntity : UnitStateMachine
 {
     public float Health => m_Health;
     public float MaxHealth => m_MaxHealth;
+    public int TravelCost;
 
     public event Action m_onDeath = delegate { };
 
@@ -33,7 +34,7 @@ public abstract class UnitEntity : UnitStateMachine
     private void Awake()
     {
         SetState(new UnitIdle(this));
-        m_State.Start(); //This is... ??? 
+        m_State.Start(); //This is... ??? calling start on an awake??
         dest = transform.position;
     }
 
@@ -53,10 +54,12 @@ public abstract class UnitEntity : UnitStateMachine
     {
         path = givenPath;
         if (path != null){
+            Debug.Log("Path was found");
             dest = path[0].transform.position;
-            m_State.StartMove();
+            SetState(new Moving(this));
         }
         else{
+            SetState(new UnitIdle(this));
             Debug.Log("Returned path was null");
         }
     }
@@ -65,8 +68,9 @@ public abstract class UnitEntity : UnitStateMachine
     {
         if (Vector3.Distance(transform.position, dest) < 0.01f){
             if (path.Count == 1){
+                Debug.Log("Moving complete. Unit set to idle");
                 path[0].cameFromNode = null;
-                m_State.StopMove();
+                SetState(new UnitIdle(this));
             }
             else{
                 path.RemoveAt(0);

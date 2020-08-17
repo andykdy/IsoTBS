@@ -7,19 +7,13 @@ public class Moving : UnitState
 {
     public Moving(UnitEntity unit) : base(unit) {}
 
-    public Vector3 target;
-
     public override void Start()
     {
+        m_Unit.SetSelectHighlight(false);
     }
 
     public override void Update()
     {
         m_Unit.MoveToDest();
-    }
-
-    public override void StopMove()
-    {
-        m_Unit.SetState(new UnitIdle(m_Unit));
     }
 }

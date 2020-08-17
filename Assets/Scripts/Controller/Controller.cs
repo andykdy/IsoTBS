@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Controller : ControllerStateMachine {
+public class Controller : ControllerStateMachine{
+    [SerializeField] private Tilemap lookup;
     [SerializeField] private Tilemap map;
     [SerializeField] private Grid grid;
+    [SerializeField] private LookUpTile luTile;
     private Camera cam;
     [HideInInspector] public UnitEntity currUnit;
 
@@ -40,9 +42,9 @@ public class Controller : ControllerStateMachine {
         {
             if(hit.transform.CompareTag("Unit")){
                 if (currUnit != null)
-                    currUnit.SetSelectHighlight(false);
+                    currUnit.SetState(new UnitIdle(currUnit));
                 currUnit = hit.transform.gameObject.GetComponent<UnitEntity>();
-                currUnit.SetSelectHighlight(true);
+                currUnit.SetState(new UnitSelect(currUnit));
                 Debug.Log("Unit Selected");
                 return "unit";
             }
@@ -51,9 +53,9 @@ public class Controller : ControllerStateMachine {
                 return "map";
             }
             else{
+                currUnit.SetState(new UnitIdle(currUnit));
                 currUnit = null;
                 Debug.Log("You hit nothing");
-                currUnit.SetSelectHighlight(true);
                 return "";
             }
         }
@@ -82,8 +84,17 @@ public class Controller : ControllerStateMachine {
         else{
             Debug.Log("End tile is not within bounds");
         }
-
-        currUnit.SetSelectHighlight(false);
         currUnit = null;
+    }
+
+    public void RenderLookUp()
+    {
+        if (currUnit == null){
+            Debug.Log("There's no unit selected... Your state system is broken");
+        }
+        else{Vector3 offsetUnit = currUnit.transform.position;
+            offsetUnit.y -= 0.25f;
+            lookup.SetTile(grid.WorldToCell(offsetUnit), luTile);
+        }
     }
 }
