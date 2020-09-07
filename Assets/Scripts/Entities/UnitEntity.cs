@@ -9,7 +9,7 @@ public abstract class UnitEntity : UnitStateMachine
 {
     public float Health => m_Health;
     public float MaxHealth => m_MaxHealth;
-    public int TravelCost;
+    public int TravelPoints;
 
     public event Action m_onDeath = delegate { };
 
@@ -36,6 +36,7 @@ public abstract class UnitEntity : UnitStateMachine
         SetState(new UnitIdle(this));
         m_State.Start(); //This is... ??? calling start on an awake??
         dest = transform.position;
+        TravelPoints = 7; // Placeholder value... Should be different for each unit
     }
 
     // Update is called once per frame

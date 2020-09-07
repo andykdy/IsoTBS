@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using UnityEngine;
 
 public class Idle : ControllerState
@@ -9,15 +10,12 @@ public class Idle : ControllerState
 
     public override void Start()
     {
+        m_Controller.SetMovePos();
     }
 
     public override void Update()
     {
-        // If click on character, move to selected
-//        if (m_Controller)
-//        {
-//            m_Controller.SetState(new Charging(m_Turret));
-//        }
+        
     }
 
     public override void OnMouseClick()
