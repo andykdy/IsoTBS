@@ -8,6 +8,7 @@ public class Node : MonoBehaviour
     public int fCost;
     public int hCost;
     public int travelCost;
+    public bool isTraversable;
 
     public Node cameFromNode;
 
@@ -19,12 +20,14 @@ public class Node : MonoBehaviour
     }
     
     // TODO: Fix this Russian Doll initialization 
-    public void Initialize(Vector3Int pos, int cost)
+    public void Initialize(Vector3Int pos, string type)
     {
+        isTraversable = type != "Water";
+        int cost = PathFindUtil.tileCost(type);
         nodePos = pos;
         Initialize(cost);
     }
-    public void Initialize( int cost)
+    public void Initialize(int cost)
     {
         travelCost = cost;
         Initialize();

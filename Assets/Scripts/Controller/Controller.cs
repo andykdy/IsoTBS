@@ -23,7 +23,6 @@ public class Controller : ControllerStateMachine{
         SetState(new Idle(this));
         m_State.Start();
         cam = Camera.main;
-        
     }
 
 
@@ -80,12 +79,13 @@ public class Controller : ControllerStateMachine{
         start = grid.WorldToCell(offsetUnit);
         startNode = map.GetInstantiatedObject(start).GetComponent<Node>();
         end = grid.WorldToCell(mousePos);
-        if (map.HasTile(end)){
+        if (map.HasTile(end) && lookup.HasTile(end)){
             Debug.Log("Searching for path");
             endNode = map.GetInstantiatedObject(end).GetComponent<Node>();
             currUnit.SetPath(Pathfinding.Instance.FindPath(startNode, endNode));
         }
         else{
+            currUnit.SetState(new UnitIdle(currUnit));
             Debug.Log("End tile is not within bounds");
         }
         currUnit = null;
@@ -109,11 +109,12 @@ public class Controller : ControllerStateMachine{
 
     private void  BFS(Vector3 currPos, int movepoints)
     {
-        if (movepoints >= 0){
-            Vector3Int tilePos = grid.WorldToCell(currPos);
-            if (map.HasTile(tilePos)){
+        
+        Vector3Int tilePos = grid.WorldToCell(currPos);
+        if (map.HasTile(tilePos)){
+            Node currNode = map.GetInstantiatedObject(tilePos).GetComponent<Node>();
+            if (movepoints - currNode.travelCost >= 0){
                 movePositions.Add(currPos);
-                Node currNode = map.GetInstantiatedObject(tilePos).GetComponent<Node>();
                 BFS(currPos - Vector3.up * 0.25f - Vector3.left * 0.5f, movepoints - currNode.travelCost);
                 BFS(currPos - Vector3.down* 0.25f - Vector3.right * 0.5f, movepoints - currNode.travelCost);
                 BFS(currPos - Vector3.up * 0.25f - Vector3.right * 0.5f, movepoints - currNode.travelCost);
