@@ -11,7 +11,7 @@ using UnityEngine.Tilemaps;
 public class AStarTile : Tile{
 	public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
 	{
-		go.GetComponent<Node>().Initialize(position, name);
+		go.GetComponent<Node>().Initialize(position, PathFindUtil.tileCost(name));
 		go.transform.Translate(0,0.25f,0);
 		return base.StartUp(position, tilemap, go);
 	}

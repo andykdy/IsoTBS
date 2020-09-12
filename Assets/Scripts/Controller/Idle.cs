@@ -10,7 +10,7 @@ public class Idle : ControllerState
 
     public override void Start()
     {
-        m_Controller.SetMovePos();
+        m_Controller.InitMovePos();
     }
 
     public override void Update()

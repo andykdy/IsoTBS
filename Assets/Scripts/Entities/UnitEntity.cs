@@ -36,14 +36,13 @@ public abstract class UnitEntity : UnitStateMachine
         SetState(new UnitIdle(this));
         m_State.Start(); //This is... ??? calling start on an awake??
         dest = transform.position;
-        TravelPoints = 7; // Placeholder value... Should be different for each unit
+        TravelPoints = 9; // Placeholder value... Should be different for each unit
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (m_State == null) return;
-        m_State.Update();
+        m_State?.Update(); // If m_State isn't null, update
     }
 
     public void SetSelectHighlight(bool isSet)
@@ -70,13 +69,11 @@ public abstract class UnitEntity : UnitStateMachine
         if (Vector3.Distance(transform.position, dest) < 0.01f){
             if (path.Count == 1){
                 Debug.Log("Moving complete. Unit set to idle");
-                path[0].cameFromNode = null;
                 SetState(new UnitIdle(this));
             }
             else{
                 path.RemoveAt(0);
                 dest = path[0].transform.position;
-                path[0].cameFromNode = null;
             }
         }
         else{
